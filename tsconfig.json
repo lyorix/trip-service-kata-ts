@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "rootDir": ".",
+    "skipLibCheck": true,
+    "allowJs": false,
+    "target": "es2020"
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}

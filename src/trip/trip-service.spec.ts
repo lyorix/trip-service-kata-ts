@@ -32,4 +32,14 @@ describe('TripService', () => {
         const trips = tripService.getTripsByUser(friend);
         expect(trips.length).toBe(0);
     });
+
+    it('should return friend trips when users are friends', () => {
+        jest.spyOn(userSession, 'getLoggedUser').mockReturnValueOnce(registeredUser);
+        const friend = new User();
+        friend.addFriend(registeredUser);
+        friend.addTrip(islandTrip);
+        tripService['findTrips'] = jest.fn().mockReturnValueOnce(friend.trips);
+        const trips = tripService.getTripsByUser(friend);
+        expect(trips.length).toBe(1);
+    });
 });

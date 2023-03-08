@@ -25,12 +25,16 @@ export class TripService {
             }
 
             if (isFriend) {
-                tripList = this._tripDao.findTripsByUser(user);
+                tripList = this.findTrips(user);
             }
 
             return tripList;
         } else {
             throw new UserNotLoggedInError();
         }
+    }
+
+    private findTrips(user: User) {
+        return this._tripDao.findTripsByUser(user);
     }
 }

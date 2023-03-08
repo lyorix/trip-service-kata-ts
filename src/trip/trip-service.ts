@@ -7,8 +7,8 @@ import { userSession } from '../user/user-session';
 export class TripService {
     private _tripDao: TripDao;
 
-    constructor() {
-        this._tripDao = new TripDao();
+    constructor(tripDao: TripDao) {
+        this._tripDao = tripDao;
     }
 
     public getTripsByUser(user: User): Trip[] {
@@ -25,7 +25,7 @@ export class TripService {
             }
 
             if (isFriend) {
-                tripList = this.findTrips(user);
+                tripList = this._tripDao.findTripsByUser(user);
             }
 
             return tripList;
@@ -33,8 +33,8 @@ export class TripService {
             throw new UserNotLoggedInError();
         }
     }
-
-    private findTrips(user: User) {
-        return this._tripDao.findTripsByUser(user);
-    }
 }
+
+export const createTripService = (tripDao?: any) => {
+    return new TripService(tripDao);
+};

@@ -1,6 +1,6 @@
 import 'jest';
 import { userSession } from '../user/user-session';
-import { TripService } from './trip-service';
+import { createTripService, TripService } from './trip-service';
 import { User } from '../user/user';
 import { UserNotLoggedInError } from '../error/user-not-logged-in-error';
 import { Trip } from './trip';
@@ -12,11 +12,15 @@ const GUEST: User = null;
 const registeredUser = new User();
 const islandTrip = new Trip();
 
+const tripDao = {
+    findTripsByUser: jest.fn(),
+};
+
 let tripService;
 
 describe('TripService', () => {
     beforeEach(() => {
-        tripService = new TripService();
+        tripService = createTripService(tripDao);
         jest.resetAllMocks();
     });
 
@@ -38,7 +42,7 @@ describe('TripService', () => {
         const friend = new User();
         friend.addFriend(registeredUser);
         friend.addTrip(islandTrip);
-        tripService['findTrips'] = jest.fn().mockReturnValueOnce(friend.trips);
+        tripDao.findTripsByUser.mockReturnValueOnce(friend.trips);
         const trips = tripService.getTripsByUser(friend);
         expect(trips.length).toBe(1);
     });

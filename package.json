@@ -4,7 +4,8 @@
   "description": "Kata for a legacy code hands-on session. The objective is to write tests and refactor the given legacy code.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage --maxWorkers=2"
+    "test": "jest --coverage --maxWorkers=2",
+    "test:watch": "jest --watch --maxWorkers=1"
   },
   "devDependencies": {
     "@types/jest": "^29.4.0",

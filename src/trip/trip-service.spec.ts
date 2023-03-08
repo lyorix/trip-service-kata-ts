@@ -9,7 +9,7 @@ jest.mock('../user/user-session');
 
 const GUEST: User = null;
 
-const registeredUser = new User();
+const registeredUser = { friends: [], trips: [] };
 const islandTrip = new Trip();
 
 const tripDao = {
@@ -31,17 +31,14 @@ describe('TripService', () => {
 
     it('should not return any trip if users are not friends', () => {
         jest.spyOn(userSession, 'getLoggedUser').mockReturnValueOnce(registeredUser);
-        const friend = new User();
-        friend.addTrip(islandTrip);
+        const friend: User = { friends: [], trips: [islandTrip] };
         const trips = tripService.getTripsByUser(friend);
         expect(trips.length).toBe(0);
     });
 
     it('should return friend trips when users are friends', () => {
         jest.spyOn(userSession, 'getLoggedUser').mockReturnValueOnce(registeredUser);
-        const friend = new User();
-        friend.addFriend(registeredUser);
-        friend.addTrip(islandTrip);
+        const friend: User = { friends: [registeredUser], trips: [islandTrip] };
         tripDao.findTripsByUser.mockReturnValueOnce(friend.trips);
         const trips = tripService.getTripsByUser(friend);
         expect(trips.length).toBe(1);

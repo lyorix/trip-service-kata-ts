@@ -1,22 +1,22 @@
 import { Trip } from '../trip/trip';
 
 export class User {
-    private trips: Trip[] = [];
-    private friends: User[] = [];
+    private _trips: Trip[] = [];
+    private _friends: User[] = [];
 
-    public getFriends(): User[] {
-        return this.friends;
+    public get friends(): User[] {
+        return this._friends;
     }
 
     public addFriend(user: User): void {
         this.friends.push(user);
     }
 
-    public addTrip(trip: Trip): void {
-        this.trips.push(trip);
+    public get trips(): Trip[] {
+        return this._trips;
     }
 
-    public getTrips(): Trip[] {
-        return this.trips;
+    public addTrip(trip: Trip): void {
+        this.trips.push(trip);
     }
 }
